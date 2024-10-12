@@ -21,7 +21,7 @@ public class ClienteService {
         return clienteRepository.findById(id).orElse(null);
     }
 
-    public Cliente salvar(Cliente cliente) {
+    public Cliente cadastrarCliente(Cliente cliente) {
     	if (cliente.getNome() == null || cliente.getNome().isEmpty()) {
             throw new IllegalArgumentException("O nome não pode ser nulo ou vazio");
         }
@@ -40,7 +40,7 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public void deletar(Integer id) {
+    public void deletarCliente(Integer id) {
         clienteRepository.deleteById(id);
     }
 

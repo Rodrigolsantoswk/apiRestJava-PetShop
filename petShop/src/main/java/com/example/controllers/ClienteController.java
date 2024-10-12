@@ -33,7 +33,7 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<?> salvar(@RequestBody Cliente cliente) {
     	try {
-    		Cliente novoCliente = clienteService.salvar(cliente);
+    		Cliente novoCliente = clienteService.cadastrarCliente(cliente);
             return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
         } catch (IllegalArgumentException e) {
         	 return ResponseEntity.badRequest().body(new ErrorController(e.getMessage()));
@@ -52,7 +52,7 @@ public class ClienteController {
     
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable int id) {
-        clienteService.deletar(id);
+        clienteService.deletarCliente(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -30,19 +30,26 @@ public class ProdutoVendaController {
     private VendaService vendaService;
 
     @PostMapping
-    public ResponseEntity<List<ProdutoVenda>> adicionarProdutoVenda(@RequestBody List<ProdutoVenda> produtosVenda) {
+    public ResponseEntity<?> adicionarProdutoVenda(@RequestBody List<ProdutoVenda> produtosVenda) {
         List<ProdutoVenda> novosProdutosVenda = new ArrayList<>();
 
         for (ProdutoVenda produtoVenda : produtosVenda) {
             Produto produto = produtoService.buscarPorId(produtoVenda.getProduto().getIdProduto());
             if (produto == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(Map.of("error", "Produto não encontrado"));
             }
-            
-            Venda venda = vendaService.buscarPorId(produtoVenda.getVenda().getIdVenda());
+
+            Venda venda = vendaService.consultarVenda(produtoVenda.getVenda().getIdVenda());
             if (venda == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(Map.of("error", "Venda não encontrada"));
             }
+            if (venda.isFinalizada()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(Map.of("error", "Não é possível adicionar produtos a uma venda já finalizada"));
+            }
+
             produtoVenda.setVenda(venda);
             produtoVenda.setValor(produto.getPreco());
 
@@ -53,7 +60,7 @@ public class ProdutoVendaController {
         if (!produtosVenda.isEmpty()) {
             vendaService.atualizarValorTotal(produtosVenda.get(0).getVenda());
         }
-        
+
         return ResponseEntity.status(HttpStatus.CREATED).body(novosProdutosVenda);
     }
     

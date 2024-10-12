@@ -28,7 +28,7 @@ public class AnimalService {
         return animalRepository.findById(id).orElse(null);
     }
 
-    public Animal salvar(Animal animal) {
+    public Animal cadastrarAnimal(Animal animal) {
         if (animal.getNome() == null || animal.getNome().isEmpty()) {
             throw new IllegalArgumentException("O nome não pode ser nulo ou vazio");
         }
@@ -59,7 +59,7 @@ public class AnimalService {
         return animalRepository.save(animal);
     }
 
-    public void deletar(int id) {
+    public void deletarAnimal(int id) {
         animalRepository.deleteById(id);
     }
     

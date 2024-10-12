@@ -20,9 +20,8 @@ public class VendaService {
     public List<Venda> listarTodas() {
         return vendaRepository.findAll();
     }
-
     @Transactional
-    public Venda buscarPorId(int id) {
+    public Venda consultarVenda(int id) {
         return vendaRepository.findById(id).orElse(null);
     }
 
@@ -32,12 +31,26 @@ public class VendaService {
     }
 
     public void atualizarValorTotal(Venda venda) {
+    	if (venda.isFinalizada()) {
+	        throw new IllegalArgumentException("Não é possível atualizar uma venda já finalizada");
+	    }
         double valorTotal = produtoVendaService.calcularValorTotal(venda);
         venda.setValorTotal(valorTotal);
         vendaRepository.save(venda);
     }
 
-    public void deletar(int id) {
+    public void deletarVenda(int id) {
+    	Venda venda = vendaRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Venda não encontrada"));
+    	if (venda.isFinalizada()) {
+            throw new IllegalArgumentException("Não é possível excluir uma venda já finalizada");
+        }
         vendaRepository.deleteById(id);
+    }
+    
+    public void finalizarVenda(int id) {
+        Venda venda = vendaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Venda não encontrada"));
+        venda.setFinalizada(true);
+        vendaRepository.save(venda);
     }
 }

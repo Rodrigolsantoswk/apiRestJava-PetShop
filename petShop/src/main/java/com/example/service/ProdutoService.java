@@ -23,7 +23,7 @@ public class ProdutoService {
         return produtoRepository.findById(id).orElse(null);
     }
 
-    public Produto salvar(Produto produto) {
+    public Produto cadastrarProduto(Produto produto) {
         if (produto.getNome() == null || produto.getNome().isEmpty()) {
             throw new IllegalArgumentException("O nome não pode ser nulo ou vazio");
         }
@@ -49,7 +49,7 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
  
-    public void deletar(int id) {
+    public void deletarProduto(int id) {
         produtoRepository.deleteById(id);
     }
     

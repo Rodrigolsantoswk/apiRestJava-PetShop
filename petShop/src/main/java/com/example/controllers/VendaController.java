@@ -23,14 +23,14 @@ public class VendaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Venda> buscarPorId(@PathVariable int id) {
-        Venda venda = vendaService.buscarPorId(id);
+        Venda venda = vendaService.consultarVenda(id);
         if (venda != null) {
             return ResponseEntity.ok(venda);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
-
+    
     @PostMapping
     public ResponseEntity<Venda> criarVenda(@RequestBody Venda venda) {
         Venda novaVenda = vendaService.criarVenda(venda);
@@ -39,7 +39,13 @@ public class VendaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable int id) {
-        vendaService.deletar(id);
+        vendaService.deletarVenda(id);
         return ResponseEntity.noContent().build();
+    }
+    
+    @PutMapping("/finalizar/{id}")
+    public ResponseEntity<Void> finalizarVenda(@PathVariable Integer id) {
+        vendaService.finalizarVenda(id);
+        return ResponseEntity.ok().build();
     }
 }

@@ -33,7 +33,7 @@ public class ProdutoController {
     @PostMapping
     public ResponseEntity<?> salvar(@RequestBody Produto produto) {
         try {
-            Produto novoProduto = produtoService.salvar(produto);
+            Produto novoProduto = produtoService.cadastrarProduto(produto);
             return ResponseEntity.status(HttpStatus.CREATED).body(novoProduto);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(new ErrorController(e.getMessage()));
@@ -52,7 +52,7 @@ public class ProdutoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable int id) {
-        produtoService.deletar(id);
+        produtoService.deletarProduto(id);
         return ResponseEntity.noContent().build();
     }
 }

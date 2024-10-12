@@ -18,6 +18,8 @@ public class Venda {
 	private int idVenda;
 	private LocalDateTime data;
 	private double valorTotal;
+	private boolean finalizada; 
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idCliente", nullable = false)
     private Cliente cliente;
@@ -26,12 +28,12 @@ public class Venda {
         this.data = data;
         this.cliente = cliente;
         this.valorTotal = valorTotal;
+        this.finalizada = false;
     }
 	
 	public Venda () {
 		
 	}
-
 	public int getIdVenda() {
 		return idVenda;
 	}
@@ -55,6 +57,12 @@ public class Venda {
 	}
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	public boolean isFinalizada() {
+		return finalizada;
+	}
+	public void setFinalizada(boolean finalizada) {
+		this.finalizada = finalizada;
 	}
 	
 }

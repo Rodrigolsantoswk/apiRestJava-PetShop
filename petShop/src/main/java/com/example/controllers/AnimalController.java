@@ -34,7 +34,7 @@ public class AnimalController {
     @PostMapping
     public ResponseEntity<?> salvar(@RequestBody Animal animal) {
     	try {
-    		Animal novoAnimal = animalService.salvar(animal);
+    		Animal novoAnimal = animalService.cadastrarAnimal(animal);
             return ResponseEntity.status(HttpStatus.CREATED).body(novoAnimal);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(new ErrorController(e.getMessage()));
@@ -53,7 +53,7 @@ public class AnimalController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable int id) {
-        animalService.deletar(id);
+        animalService.deletarAnimal(id);
         return ResponseEntity.noContent().build();
     }
 }
