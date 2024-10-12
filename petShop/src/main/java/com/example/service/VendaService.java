@@ -2,11 +2,8 @@ package com.example.service;
 
 import com.example.entities.Venda;
 import com.example.repository.VendaRepository;
-
 import jakarta.transaction.Transactional;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +40,4 @@ public class VendaService {
     public void deletar(int id) {
         vendaRepository.deleteById(id);
     }
-    
-    
 }

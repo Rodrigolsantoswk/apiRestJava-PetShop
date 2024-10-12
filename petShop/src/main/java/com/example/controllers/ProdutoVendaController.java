@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/ProdutoVenda")
@@ -54,5 +55,11 @@ public class ProdutoVendaController {
         }
         
         return ResponseEntity.status(HttpStatus.CREATED).body(novosProdutosVenda);
+    }
+    
+    @GetMapping("/venda/{id}")
+    public ResponseEntity<Map<String, Object>> buscarVendaCompleta(@PathVariable Integer id) {
+        Map<String, Object> response = produtoVendaService.buscarProdutosPorVenda(id);
+        return ResponseEntity.ok(response);
     }
 }
