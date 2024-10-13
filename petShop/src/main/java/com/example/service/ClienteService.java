@@ -41,6 +41,9 @@ public class ClienteService {
     }
 
     public void deletarCliente(Integer id) {
+    	if (!clienteRepository.existsById(id)) {
+            throw new IllegalArgumentException("O cliente não existe e não pôde ser apagado.");
+        }
         clienteRepository.deleteById(id);
     }
 

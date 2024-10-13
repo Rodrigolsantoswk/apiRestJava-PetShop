@@ -32,9 +32,13 @@ public class VendaController {
     }
     
     @PostMapping
-    public ResponseEntity<Venda> criarVenda(@RequestBody Venda venda) {
-        Venda novaVenda = vendaService.criarVenda(venda);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novaVenda);
+    public ResponseEntity<?> criarVenda(@RequestBody Venda venda) {
+        try {
+            Venda novaVenda = vendaService.criarVenda(venda);
+            return ResponseEntity.status(HttpStatus.CREATED).body(novaVenda);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new ErrorController(e.getMessage()));
+        }
     }
 
     @DeleteMapping("/{id}")

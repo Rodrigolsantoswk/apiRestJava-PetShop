@@ -21,7 +21,7 @@ public class ProdutoVenda {
     @ManyToOne
     @JoinColumn(name = "idVenda", nullable = false)
     private Venda venda;
-    private int quantidade; 
+    private Integer quantidade; 
     private Double valor;
     
 	public ProdutoVenda(int idItemVenda, Produto produto, Venda venda, int quantidade, Double valor) {
@@ -54,10 +54,10 @@ public class ProdutoVenda {
 	public void setVenda(Venda venda) {
 		this.venda = venda;
 	}
-	public int getQuantidade() {
+	public Integer getQuantidade() {
 		return quantidade;
 	}
-	public void setQuantidade(int quantidade) {
+	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
 	public Double getValor() {
